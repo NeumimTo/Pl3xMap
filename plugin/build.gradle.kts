@@ -13,6 +13,8 @@ dependencies {
     implementation("net.kyori", "adventure-text-minimessage", "4.1.0-SNAPSHOT")
     implementation("io.undertow", "undertow-core", "2.2.3.Final")
     implementation("org.bstats", "bstats-bukkit", "2.2.1")
+    implementation("com.zaxxer", "HikariCP", "5.0.0")
+
     paperDevBundle("1.18.1-R0.1-SNAPSHOT")
 }
 

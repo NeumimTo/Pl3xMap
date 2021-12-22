@@ -80,4 +80,14 @@ public class Config extends AbstractConfig {
         )).forEach(entry -> MAIN_COMMAND_ALIASES.add(entry.toString()));
     }
 
+    public static boolean USE_DB = false;
+    public static String DB_TABLE_NAME_TILES = "map_tiles";
+    public static String DB_TABLE_NAME_MARKERS = "map_markers";
+
+    private static void setupDb() {
+        USE_DB = config.getBoolean("settings.db.use_db", USE_DB);
+        DB_TABLE_NAME_TILES = config.getString("settings.db.table-name_tiles", DB_TABLE_NAME_TILES);
+        DB_TABLE_NAME_MARKERS = config.getString("settings.db.table-name_markers", DB_TABLE_NAME_MARKERS);
+    }
+
 }
