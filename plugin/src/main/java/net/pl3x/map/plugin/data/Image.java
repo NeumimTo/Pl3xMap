@@ -12,6 +12,7 @@ import javax.imageio.stream.ImageOutputStream;
 
 import net.minecraft.util.Mth;
 import net.pl3x.map.plugin.Logger;
+import net.pl3x.map.plugin.Pl3xMapPlugin;
 import net.pl3x.map.plugin.configuration.Config;
 import net.pl3x.map.plugin.configuration.Lang;
 
@@ -49,21 +50,10 @@ public class Image {
             int scaledZ = Mth.floor((double) region.getZ() / step);
 
             String fileName = scaledX + "_" + scaledZ + ".png";
-            File file = new File(dir.toString(), fileName);
 
             try {
-                BufferedImage image;
-                if (file.exists()) {
-                    try {
-                        image = ImageIO.read(file);
-                    } catch (IIOException e) {
-                        Logger.warn(Lang.LOG_CORRUPTED_PNG.replace("{png}", fileName), e);
-                        file.delete();
-                        image = new BufferedImage(SIZE, SIZE, BufferedImage.TYPE_INT_ARGB);
-                    }
-                } else {
-                    image = new BufferedImage(SIZE, SIZE, BufferedImage.TYPE_INT_ARGB);
-                }
+                BufferedImage image = Pl3xMapPlugin.getInstance().mapDataStorage().load(dir.toString(), scaledX, scaledZ, zoom);
+
 
                 int baseX = (region.getX() * size) & (SIZE - 1);
                 int baseZ = (region.getZ() * size) & (SIZE - 1);
@@ -91,7 +81,7 @@ public class Image {
                         writer.write(null, new IIOImage(image, null, null), param);
                     }
                 } else {
-                    ImageIO.write(image, "png", file);
+                    Pl3xMapPlugin.getInstance().mapDataStorage().save(image, "png", file, scaledX, scaledZ, zoom);
                 }
             } catch (IOException e) {
                 Logger.severe(Lang.LOG_COULD_NOT_SAVE_REGION

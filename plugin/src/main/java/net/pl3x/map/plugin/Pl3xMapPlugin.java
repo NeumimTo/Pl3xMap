@@ -9,11 +9,14 @@ import net.pl3x.map.plugin.command.CommandManager;
 import net.pl3x.map.plugin.configuration.Advanced;
 import net.pl3x.map.plugin.configuration.Config;
 import net.pl3x.map.plugin.configuration.Lang;
+import net.pl3x.map.plugin.data.Image;
+import net.pl3x.map.plugin.storage.DatabaseStorage;
 import net.pl3x.map.plugin.httpd.IntegratedServer;
 import net.pl3x.map.plugin.listener.MapUpdateListeners;
 import net.pl3x.map.plugin.listener.PlayerListener;
 import net.pl3x.map.plugin.listener.WorldEventListener;
 import net.pl3x.map.plugin.network.Network;
+import net.pl3x.map.plugin.storage.FileStorage;
 import net.pl3x.map.plugin.task.UpdatePlayers;
 import net.pl3x.map.plugin.task.UpdateWorldData;
 import net.pl3x.map.plugin.util.FileUtil;
@@ -39,6 +42,7 @@ public final class Pl3xMapPlugin extends JavaPlugin {
     private UpdatePlayers updatePlayers;
     private MapUpdateListeners mapUpdateListeners;
     private WorldEventListener worldEventListener;
+    private MapDataStorage mapDataStorage;
 
     public Pl3xMapPlugin() {
         instance = this;
@@ -121,6 +125,7 @@ public final class Pl3xMapPlugin extends JavaPlugin {
         } else {
             Logger.info(Lang.LOG_INTERNAL_WEB_DISABLED);
         }
+        this.mapDataStorage = Config.USE_DB ? new DatabaseStorage(this) : new FileStorage(this);
     }
 
     public void stop() {
@@ -161,6 +166,7 @@ public final class Pl3xMapPlugin extends JavaPlugin {
         }
 
         this.getServer().getScheduler().cancelTasks(this);
+        this.mapDataStorage.shutdown();
     }
 
     public @NonNull WorldManager worldManager() {
@@ -187,5 +193,9 @@ public final class Pl3xMapPlugin extends JavaPlugin {
 
     public PlayerManager playerManager() {
         return this.playerManager;
+    }
+
+    public MapDataStorage mapDataStorage() {
+        return mapDataStorage;
     }
 }

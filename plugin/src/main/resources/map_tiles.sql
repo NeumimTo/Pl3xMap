@@ -4,5 +4,5 @@ CREATE TABLE %tablename% (
   z INT,
   zoom INT,
   tile BLOB NOT NULL,
-  INDEX %tablename%_idx (world,x,z)
+  primary key (world,x,z,zoom)
 )
