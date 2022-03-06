@@ -81,7 +81,7 @@ public class Image {
                         writer.write(null, new IIOImage(image, null, null), param);
                     }
                 } else {
-                    Pl3xMapPlugin.getInstance().mapDataStorage().save(image, "png", file, scaledX, scaledZ, zoom);
+                    Pl3xMapPlugin.getInstance().mapDataStorage().save(image, "png", file);
                 }
             } catch (IOException e) {
                 Logger.severe(Lang.LOG_COULD_NOT_SAVE_REGION

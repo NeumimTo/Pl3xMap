@@ -1,7 +1,6 @@
 package net.pl3x.map.plugin.storage;
 
 import net.pl3x.map.plugin.Logger;
-import net.pl3x.map.plugin.MapDataStorage;
 import net.pl3x.map.plugin.Pl3xMapPlugin;
 import net.pl3x.map.plugin.configuration.Lang;
 import net.pl3x.map.plugin.data.Image;
@@ -18,6 +17,11 @@ public class FileStorage implements MapDataStorage {
 
     public FileStorage(Pl3xMapPlugin pl3xMapPlugin) {
         this.pl3xMapPlugin = pl3xMapPlugin;
+    }
+
+    @Override
+    public void shutdown() {
+
     }
 
     @Override

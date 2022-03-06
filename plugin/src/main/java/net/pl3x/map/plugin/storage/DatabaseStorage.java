@@ -85,11 +85,11 @@ public class DatabaseStorage implements MapDataStorage {
                     return image;
                 }
             } catch (SQLException ex) {
-                Logger.severe("Unable to read query result" + query ,ex);
+                Logger.severe("Unable to read query result" + sql ,ex);
             }
 
         } catch (SQLException ex) {
-            Logger.severe("Unable to update or inesrt tile " + world + " " + x + "," + z);
+            Logger.severe("Unable to update or inesrt tile " + dir + " " + scaledX + "," + scaledZ);
         }
         return new BufferedImage(Image.SIZE, Image.SIZE, BufferedImage.TYPE_INT_ARGB);
     }
@@ -178,11 +178,11 @@ public class DatabaseStorage implements MapDataStorage {
                     return resultSet.getString(1);
                 }
             } catch (SQLException ex) {
-                Logger.severe("Unable to read query result" + query ,ex);
+                Logger.severe("Unable to read query result " + query ,ex);
             }
 
         } catch (SQLException ex) {
-            Logger.severe("Unable to execute query" + query ,ex);
+            Logger.severe("Unable to execute query " + query ,ex);
         }
         return "";
     }
